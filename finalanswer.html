@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+    <link rel="stylesheet" href="script.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"/>
+</head>
+<body>
+    <div id="elzero-app" class="container">
+    <form action="">
+        <input type="" placeholder="Type your task" v-model="taskText"/>
+        <button @click.prevent="addTask" :disabled="!taskText">Add task</button>
+        <button class="delete-all" v-if="tasks.length > 1" @click.prevent = "deleteAll">Delete all</button>
+    </form>
+    <div class="tasks-list"v-for="(task, index) in tasks">
+        <div class="task-box" @click="task.done = !task.done" :style="{ 'text-decoration' : task.done ? 'line-through' : '' }">{{task.words}} </div>
+            <span class="delete" @click.stop="deleteTask(index)">Delete</span>
+        </div>
+        
+    </div>
+   </div>
+    <script>
+        var app = new Veu({
+            el: '#elzero-app',
+            data: {
+                tasks: [],
+                taskText: ""
+            },
+            methods: {
+                addTask: function() {
+                    this.tasks.push({ words: this.taskText, done: false});
+                    this.taskText = "";
+                },
+                deleteTask: function (index) {
+                this.tasks.splice(index, 1);
+                },
+                deleteAll: function (){
+                    this.tasks = [];
+                }
+            }
+        })
+    </script>
+</body>
+</html>
